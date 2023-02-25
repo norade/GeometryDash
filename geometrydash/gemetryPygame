@@ -1,0 +1,64 @@
+import pygame, sys 
+from pygame.locals import * 
+import time
+pygame.init()
+
+flagStart=1
+
+
+size = width, height = 480,320
+screen = pygame.display.set_mode(size)
+r = 0
+CameraX=0
+CameraY=0
+moveFlag=0
+
+bif = pygame.image.load("bg.png") 
+pygame.display.set_caption("Pygame 2D RPG !")
+pygame.mixer.music.load('bgm.mp3')
+pygame.event.set_blocked(pygame.MOUSEMOTION) #To test for mouse stop
+
+pygame.mixer.music.play(-1, 30.0)
+x,y=10,50
+movex, movey=0,0
+
+character="boy.png"
+player=pygame.image.load(character).convert_alpha()
+while True:
+    
+    if flagStart==1:
+        if x==50:
+            flagStart=0
+        x +=10   
+    else:
+        x+=10 
+
+    y=200
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type==KEYDOWN:
+    
+            if event.key==K_UP:
+                moveFlag=1
+  
+
+        x+=movex
+        y+=movey    
+        CameraX=x
+        if moveFlag==1:
+            y+=-90
+            moveFlag=0
+        
+
+        screen.fill((r,0,0))
+        screen.blit(bif,(0 ,0 ))
+        if flagStart==0:
+            screen.blit(player,(x -CameraX,y -CameraY))
+        else:
+            screen.blit(player,(x ,y ))
+
+        pygame.display.flip()
+
+        
